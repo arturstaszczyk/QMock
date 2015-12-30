@@ -29,6 +29,11 @@ public:
     {
         return RETURN_VALUES(int);
     }
+
+    QString call5()
+    {
+        return RETURN_VALUES(QString);
+    }
 };
 
 #endif // MOCKTESTER

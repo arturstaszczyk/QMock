@@ -16,6 +16,7 @@ private Q_SLOTS:
     void testArgsStored();
     void testArgsStoredReset();
     void testReturnValues();
+    void testReturnValuesString();
     void testAddReturnValues();
     void testResetReturnValues();
 };
@@ -124,6 +125,19 @@ void QtMockTest::testResetReturnValues()
 
     QCOMPARE(tester.call4(), 0);
     QCOMPARE(tester.call4(), 0);
+}
+
+void QtMockTest::testReturnValuesString()
+{
+    MockTester tester;
+
+    QVariantList returnValues { "1", "2" };
+    tester.returnValues("call5", returnValues);
+    QCOMPARE(tester.call5(), QString("1"));
+    tester.reset();
+
+    QCOMPARE(tester.call5(), QString(""));
+    QCOMPARE(tester.call5(), QString());
 }
 
 QTEST_APPLESS_MAIN(QtMockTest)
