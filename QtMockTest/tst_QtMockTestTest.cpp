@@ -13,6 +13,7 @@ public:
 private Q_SLOTS:
     void testCallsMade();
     void testSpecialFunctionsForCalls();
+    void testSpecialFunctionsForCallsFails();
     void testReset();
     void testArgsStored();
     void testArgsStoredReset();
@@ -57,6 +58,16 @@ void QtMockTest::testSpecialFunctionsForCalls()
     QVERIFY(tester.hasExactlyOneCall("call2"));
     QVERIFY(tester.hasCall("call1"));
     QVERIFY(tester.hasCall("call2"));
+}
+
+void QtMockTest::testSpecialFunctionsForCallsFails()
+{
+    MockTester tester;
+    tester.call1();
+
+    QVERIFY(!tester.hasCalls("call1", 2));
+    QVERIFY(!tester.hasExactlyOneCall("call2"));
+    QVERIFY(!tester.hasCall("call2"));
 }
 
 void QtMockTest::testReset()
