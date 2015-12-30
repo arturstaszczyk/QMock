@@ -25,10 +25,10 @@ DEFINES += SRCDIR=\\\"$$PWD/\\\"
 HEADERS += \
     MockTester.h
 
-unix|win32: LIBS += -L$$OUT_PWD/../QtMock/ -lQtMock
+unix|win32: LIBS += -L$$PWD/../QtMock/lib/debug -lQtMock
 
 INCLUDEPATH += $$PWD/../QtMock
 DEPENDPATH += $$PWD/../QtMock
 
-win32:!win32-g++: PRE_TARGETDEPS += $$OUT_PWD/../QtMock/QtMock.lib
-else:unix|win32-g++: PRE_TARGETDEPS += $$OUT_PWD/../QtMock/libQtMock.a
+win32:!win32-g++: PRE_TARGETDEPS += $$PWD/../QtMock/lib/debug/QtMock.lib
+else:unix|win32-g++: PRE_TARGETDEPS += $$PWD/../QtMock/lib/debug/libQtMock.a

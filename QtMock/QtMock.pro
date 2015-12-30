@@ -11,7 +11,15 @@ TEMPLATE = lib
 CONFIG += staticlib
 CONFIG += c++11 warn_on rtti exceptions
 
-SOURCES +=
+CONFIG(debug, debug|release):{
+    DESTDIR = $$PWD/lib/debug
+}
+else:CONFIG(release, debug|release):{
+    DESTDIR = $$PWD/lib/release
+}
+
+SOURCES += \
+    QtMock.cpp
 
 HEADERS += QtMock.h
 
