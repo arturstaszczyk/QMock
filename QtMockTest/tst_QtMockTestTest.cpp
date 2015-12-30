@@ -65,6 +65,7 @@ void QtMockTest::testSpecialFunctionsForCallsFails()
     MockTester tester;
     tester.call1();
 
+    QVERIFY(!tester.hasExactlyOneCall("call"));
     QVERIFY(!tester.hasCalls("call1", 2));
     QVERIFY(!tester.hasExactlyOneCall("call2"));
     QVERIFY(!tester.hasCall("call2"));
