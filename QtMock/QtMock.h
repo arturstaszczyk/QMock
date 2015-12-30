@@ -85,7 +85,7 @@ protected:
         T retValue = T();
         if(mReturnValue.contains(callName))
         {
-            T currentIdx = mReturnValuesUsed[callName].toInt();
+            int currentIdx = mReturnValuesUsed[callName].toInt();
             auto returnValuesList = mReturnValue[callName].toList();
             if(returnValuesList.count() > currentIdx)
             {
