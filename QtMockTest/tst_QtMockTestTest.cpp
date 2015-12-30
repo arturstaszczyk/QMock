@@ -15,6 +15,9 @@ private Q_SLOTS:
     void testReset();
     void testArgsStored();
     void testArgsStoredReset();
+    void testReturnValues();
+    void testAddReturnValues();
+    void testResetReturnValues();
 };
 
 void QtMockTest::testCallsMade()
@@ -73,6 +76,54 @@ void QtMockTest::testArgsStoredReset()
     tester.call3(5, 'a');
     tester.reset();
     QCOMPARE(tester.callArgs("call3").count(), 0);
+}
+
+void QtMockTest::testReturnValues()
+{
+    MockTester tester;
+
+    QVariantList returnValues { 1, 2, 3 };
+    tester.returnValues("call4", returnValues);
+
+    QCOMPARE(tester.call4(), returnValues[0].toInt());
+    QCOMPARE(tester.call4(), returnValues[1].toInt());
+    QCOMPARE(tester.call4(), returnValues[2].toInt());
+    QCOMPARE(tester.call4(), 0);
+}
+
+void QtMockTest::testAddReturnValues()
+{
+    MockTester tester;
+
+    QVariantList returnValues { 1, 2 };
+    tester.returnValues("call4", returnValues);
+
+    QCOMPARE(tester.call4(), 1);
+    QCOMPARE(tester.call4(), 2);
+    QCOMPARE(tester.call4(), 0);
+
+    returnValues = QVariantList { 3, 4 };
+    tester.returnValues("call4", returnValues);
+    QCOMPARE(tester.call4(), 3);
+
+    returnValues = QVariantList { 5, 6 };
+    tester.returnValues("call4", returnValues);
+    QCOMPARE(tester.call4(), 4);
+    QCOMPARE(tester.call4(), 5);
+    QCOMPARE(tester.call4(), 6);
+}
+
+void QtMockTest::testResetReturnValues()
+{
+    MockTester tester;
+
+    QVariantList returnValues { 1, 2 };
+    tester.returnValues("call4", returnValues);
+    QCOMPARE(tester.call4(), 1);
+    tester.reset();
+
+    QCOMPARE(tester.call4(), 0);
+    QCOMPARE(tester.call4(), 0);
 }
 
 QTEST_APPLESS_MAIN(QtMockTest)

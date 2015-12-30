@@ -11,9 +11,10 @@ TEMPLATE = lib
 CONFIG += staticlib
 CONFIG += c++11 warn_on rtti exceptions
 
-SOURCES += QtMock.cpp
+SOURCES +=
 
 HEADERS += QtMock.h
+
 unix {
     target.path = /usr/lib
     INSTALLS += target

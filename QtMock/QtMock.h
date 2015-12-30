@@ -7,6 +7,11 @@
 #define MOCK_FNAME __FUNCTION__
 #define MOCK_CALL mCalls.append(MOCK_FNAME)
 #define MOCK_ARG(call, x) addCallArg(call, x)
+#define SET_RETURN_VALUES(call, args) addReturnValues(call, args)
+#define RETURN_VALUES(T) returnValue<T>(MOCK_FNAME)
+
+namespace QtMockExt
+{
 
 class QtMock
 {
@@ -16,6 +21,8 @@ public:
     {
         mCalls.clear();
         mCallArgs.clear();
+        mReturnValue.clear();
+        mReturnValuesUsed.clear();;
     }
 
     const QStringList& calls() const { return mCalls; }
@@ -35,12 +42,12 @@ public:
         return mCalls.filter(call, Qt::CaseSensitive).count() == times;
     }
 
-//    void returnValues(QString method, QVariant value)
-//    {
+    void returnValues(QString method, QVariantList values)
+    {
+        SET_RETURN_VALUES(method, values);
+    }
 
-//    }
-
-    const QVariantList& callArgs(QString callName)
+    const QVariantList callArgs(QString callName)
     {
         return mCallArgs.value(callName).toList();
     }
@@ -56,10 +63,47 @@ protected:
         mCallArgs[callName] = argsList;
     }
 
+    void addReturnValues(QString callName, QVariantList values)
+    {
+        if(!mReturnValue.contains(callName))
+        {
+            mReturnValue.insert(callName, values);
+            mReturnValuesUsed.insert(callName, 0);
+        }
+        else
+        {
+            auto retValues = mReturnValue[callName].toList();
+            retValues.append(values);
+            mReturnValue[callName] = retValues;
+        }
+    }
+
+    template
+    <typename T>
+    T returnValue(QString callName)
+    {
+        T retValue = T();
+        if(mReturnValue.contains(callName))
+        {
+            T currentIdx = mReturnValuesUsed[callName].toInt();
+            auto returnValuesList = mReturnValue[callName].toList();
+            if(returnValuesList.count() > currentIdx)
+            {
+                retValue = qvariant_cast<T>(returnValuesList[currentIdx]);
+                mReturnValuesUsed[callName] = currentIdx + 1;
+            }
+        }
+
+        return retValue;
+    }
+
 protected:
     QStringList mCalls;
     QVariantMap mCallArgs;
     QVariantMap mReturnValue;
+    QVariantMap mReturnValuesUsed;
 };
+
+}
 
 #endif // QTMOCK_H

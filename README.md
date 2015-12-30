@@ -22,3 +22,5 @@ void MyMockClass::call2(int arg);
     CALL; ARG(MOCK_FNAME, arg);
 }
 ```
+
+See tst_QtMockTestTest.cpp for usage examples
