@@ -1,4 +1,5 @@
 ﻿A class used for mocking other classes in Qt
+https://github.com/arturstaszczyk/QtMock
 
 #Usage:
 In your mock class just inherit this class
