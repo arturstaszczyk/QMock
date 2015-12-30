@@ -34,7 +34,7 @@ public:
 
     bool hasCall(QString call) const
     {
-        return mCalls.filter(call, Qt::CaseSensitive).count() > 1;
+        return mCalls.filter(call, Qt::CaseSensitive).count() >= 1;
     }
 
     bool hasCalls(QString call, int times) const
