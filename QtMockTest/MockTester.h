@@ -22,7 +22,7 @@ public:
 
     void call3(int arg1, char arg2)
     {
-        MOCK_CALL; MOCK_ARG(MOCK_FNAME, arg1); MOCK_ARG(MOCK_FNAME, arg2);
+        MOCK_CALL; MOCK_ARG(arg1); MOCK_ARG(arg2);
     }
 
     int call4()
