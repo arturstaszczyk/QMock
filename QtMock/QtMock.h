@@ -6,7 +6,7 @@
 
 #define MOCK_FNAME __FUNCTION__
 #define MOCK_CALL mCalls.append(MOCK_FNAME)
-#define MOCK_ARG(call, x) addCallArg(call, x)
+#define MOCK_ARG(call, x) addCallArg(MOCK_FNAME, x)
 #define SET_RETURN_VALUES(call, args) addReturnValues(call, args)
 #define RETURN_VALUES(T) returnValue<T>(MOCK_FNAME)
 
